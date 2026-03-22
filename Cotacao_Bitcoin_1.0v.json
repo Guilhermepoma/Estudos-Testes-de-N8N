@@ -14,11 +14,8 @@
       },
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.3,
-      "position": [
-        -208,
-        48
-      ],
-      "id": "a36ad609-cb45-487e-b170-ea5bbd463acb",
+      "position": [-208, 48],
+      "id": "REMOVIDO",
       "name": "Schedule Trigger"
     },
     {
@@ -28,44 +25,35 @@
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
-      "position": [
-        16,
-        48
-      ],
-      "id": "b8bc4b61-a55d-448f-8899-9e304ba97634",
+      "position": [16, 48],
+      "id": "REMOVIDO",
       "name": "HTTP Request"
     },
     {
       "parameters": {
-        "jsCode": "const data = items[0].json;\n\n// Novo formato: { bitcoin: { usd: 70528 } }\nconst symbol = Object.keys(data)[0];        // \"bitcoin\"\nconst price = data[symbol].usd;             // 70528\n\nconst date = new Date();\nconst dataISO = date.toISOString();\n\nlet status = \"estável\";\nif (price > 70000) status = \"em alta 🚀\";\nif (price < 69000) status = \"em queda 📉\";\n\nreturn [{\n  json: {\n    ativo: symbol,\n    preco: price,\n    status: status,\n    data: dataISO,\n    resumo: `O ${symbol} está ${status}, cotado a $${price.toFixed(2)}.`\n  }\n}];"
+        "jsCode": "const data = items[0].json;\n\nconst symbol = Object.keys(data)[0];\nconst price = data[symbol].usd;\n\nconst date = new Date();\nconst dataISO = date.toISOString();\n\nlet status = \"estável\";\nif (price > 70000) status = \"em alta 🚀\";\nif (price < 69000) status = \"em queda 📉\";\n\nreturn [{\n  json: {\n    ativo: symbol,\n    preco: price,\n    status: status,\n    data: dataISO,\n    resumo: `O ${symbol} está ${status}, cotado a $${price.toFixed(2)}.`\n  }\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [
-        208,
-        48
-      ],
-      "id": "54fd61f5-3713-4319-8adc-f4498e69ee5d",
+      "position": [208, 48],
+      "id": "REMOVIDO",
       "name": "Code in JavaScript"
     },
     {
       "parameters": {
-        "chatId": "=1479076079",
+        "chatId": "SEU_CHAT_ID",
         "text": "={{$json.resumo}}",
         "additionalFields": {}
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
-      "position": [
-        496,
-        112
-      ],
-      "id": "eaf70256-2d2b-4d3b-8af2-d9ae59ef428a",
+      "position": [496, 112],
+      "id": "REMOVIDO",
       "name": "Send a text message",
-      "webhookId": "33670de3-074a-4720-bb14-a25aba604b3c",
+      "webhookId": "REMOVIDO",
       "credentials": {
         "telegramApi": {
-          "id": "SUA-URL",
+          "id": "REMOVIDO",
           "name": "Telegram account"
         }
       }
@@ -73,10 +61,10 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https:Sua-API-aqui",
+        "url": "https://SUA_API_AQUI",
         "sendHeaders": true,
         "specifyHeaders": "json",
-        "jsonHeaders": "{\n  \"apikey\":\"API-DB\",\n  \"Authorization\": \"Bearer sb_publishable_G1fWN3dmvRYJUSg-2mTZQw_Afm9YdcA\",\n  \"Content-Type\": \"application/json\",\n  \"Prefer\": \"return=minimal\"\n}",
+        "jsonHeaders": "{\n  \"apikey\":\"SUA_API_KEY\",\n  \"Authorization\": \"Bearer SEU_TOKEN\",\n  \"Content-Type\": \"application/json\",\n  \"Prefer\": \"return=minimal\"\n}",
         "sendBody": true,
         "specifyBody": "json",
         "jsonBody": "={\n  \"ativo\": \"{{$json.ativo}}\",\n  \"preco\": {{$json.preco}},\n  \"status\": \"{{$json.status}}\",\n  \"data\": \"{{$json.data}}\"\n}",
@@ -84,69 +72,24 @@
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
-      "position": [
-        496,
-        -64
-      ],
-      "id": "5723adbb-2d30-4ff8-bd02-36a534fbfe11",
+      "position": [496, -64],
+      "id": "REMOVIDO",
       "name": "HTTP Request1"
     }
   ],
-  "pinData": {},
   "connections": {
     "Schedule Trigger": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
+      "main": [[{ "node": "HTTP Request", "type": "main", "index": 0 }]]
     },
     "HTTP Request": {
-      "main": [
-        [
-          {
-            "node": "Code in JavaScript",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
+      "main": [[{ "node": "Code in JavaScript", "type": "main", "index": 0 }]]
     },
     "Code in JavaScript": {
-      "main": [
-        [
-          {
-            "node": "Send a text message",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request1": {
-      "main": [
-        []
-      ]
+      "main": [[{ "node": "Send a text message", "type": "main", "index": 0 }]]
     }
   },
   "active": true,
   "settings": {
-    "executionOrder": "v1",
-    "binaryMode": "separate",
-    "timeSavedMode": "fixed",
-    "callerPolicy": "workflowsFromSameOwner",
-    "executionTimeout": -1,
-    "availableInMCP": false
-  },
-  "versionId": "2bf0d0e4-bc64-44ff-9e6f-4859c1f5effd",
-  "meta": {
-    "templateCredsSetupCompleted": true,
-    "instanceId": "c03119c5989de46addfe1cf28f21021abb2d4352388d4450d106303f60238d9f"
-  },
-  "id": "gv0VENplbT6S0BjT",
-  "tags": []
+    "executionOrder": "v1"
+  }
 }
